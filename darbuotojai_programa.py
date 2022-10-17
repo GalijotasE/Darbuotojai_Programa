@@ -3,7 +3,7 @@ from tkinter import *
 from funkcijos import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from datetime import datetime
+import datetime
 
 engine = create_engine('sqlite:///pirma.db')
 Session = sessionmaker(bind=engine)
@@ -90,7 +90,6 @@ class Menu:
         self.i_pareigos(0, 'end')
         self.i_atlyginimas(0, 'end')
         self.i_vardas.focus()
-        
 
     def atnaujinimas(self):
         self.newWindow = tk.Toplevel(self.pagrindinis)
