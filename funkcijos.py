@@ -20,6 +20,7 @@ def istrinti_is_saraso(id):
     session.delete(darbuotojai)
     session.commit()
 
+
 def atnaujinti_duomenis(id, n_vardas, n_pavarde, n_gimimo_data, n_pareigos, n_atlyginimas):
     darbuotojai = session.query(Darbuotojai).get(id)
     Darbuotojai.vardas = n_vardas

@@ -103,7 +103,7 @@ class Menu:
         self.i_pareigos.pack()
         self.u_atlyginimas.pack()
         self.i_atlyginimas.pack()
-        self.prideti.pack(side=BOTTOM)
+        self.prideti.pack()
         self.frame.pack()
 
 
@@ -111,15 +111,15 @@ class Menu:
         self.newWindow = tk.Toplevel(self.pagrindinis)
         self.frame = tk.Frame(self.pagrindinis)
         self.app = self.newWindow
-        self.newWindow.geometry("500x500")
+        self.newWindow.geometry("550x550")
         self.pavadinimas = Label(self.app, text="=== NAUJAS DARBUOTOJAS ===", font=("Bahnschrift", 25))
         self.pasirinkimas = Label(self.app, text="Pasirinkite Darbuotoja", font=("Bahnschrift", 15))
         self.pasirinkimas2 = Label(self.app, text="Kuri Norite Istrinti:", font=("Bahnschrift", 15))
-        self.sarasiukas = Listbox(self.app, width=500 ,selectmode=SINGLE)
+        self.sarasiukas = Listbox(self.app, width=100, height=15 ,selectmode=SINGLE)
         self.sarasiukas.insert(END, *database_sarasas())
         self.istrinti = Button(self.app, text="ISTRINTI", font=("Bahnschrift", 15))
         #self.trinti = database_sarasas()[self.sarasiukas.curselection()[0]]
-        #istrinti_is_saraso(id)
+        #self.komanda = istrinti_is_saraso(self.trinti.id)
         self.pavadinimas.pack(side=TOP)
         self.pasirinkimas.pack(side=TOP)
         self.pasirinkimas2.pack(side=TOP)
