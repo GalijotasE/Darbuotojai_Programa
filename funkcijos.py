@@ -2,7 +2,6 @@ from darbuotojai_db import Darbuotojai
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from darbuotojai_db import Darbuotojai
-from darbuotojai_programa import Darbuotojai
 
 
 engine = create_engine('sqlite:///pirma.db')

@@ -3,6 +3,7 @@ from tkinter import *
 from funkcijos import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from datetime import datetime
 
 engine = create_engine('sqlite:///pirma.db')
 Session = sessionmaker(bind=engine)
@@ -38,6 +39,7 @@ class Menu:
         self.sarasiukas.pack(side=TOP)
         self.frame.pack()
 
+
     def naujas(self):
         self.newWindow = tk.Toplevel(self.pagrindinis)
         self.frame = tk.Frame(self.pagrindinis)
@@ -54,7 +56,6 @@ class Menu:
         self.i_pareigos = Entry(self.app)
         self.u_atlyginimas = Label(self.app, text="ATLYGINIMAS",font=("Bahnschrift", 15))
         self.i_atlyginimas = Entry(self.app)
-        self.i_vardas.bind("<Return>", self.naujas_darbuotojas)
         self.prideti = Button(self.app, text="PRIDETI", command=self.naujas_darbuotojas, width=18, font=("Bahnschrift", 15))
         self.pavadinimas.pack(side=TOP)
         self.u_vardas.pack()
@@ -71,7 +72,13 @@ class Menu:
         self.frame.pack()
 
     def naujas_darbuotojas(self):
-        prideti_prie_saraso(self.i_vardas, self.i_pavarde, self.i_gimimo_data, self.i_pareigos, self.i_atlyginimas)
+        prideti_prie_saraso(
+            vardas=self.i_vardas.get(),
+            pavarde=self.i_pavarde.get(),
+            gimimo_data=self.i_gimimo_data.get(),
+            pareigos=self.i_pareigos.get(),
+            atlyginimas=self.i_atlyginimas.get()
+        )
         self.atnaujinti()
 
     def atnaujinti(self):
@@ -98,13 +105,13 @@ class Menu:
         self.i_vardas = Entry(self.app)
         self.u_pavarde = Label(self.app, text="PAVARDE",font=("Bahnschrift", 15))
         self.i_pavarde = Entry(self.app)
-        self.u_gimimo_data = Label(self.app, text="GIMIMO DATA YYYY-MM-DD",font=("Bahnschrift", 15))
+        self.u_gimimo_data = Label(self.app, text="GIMIMO DATA YYYY-MM-DD" ,font=("Bahnschrift", 15))
         self.i_gimimo_data = Entry(self.app)
         self.u_pareigos = Label(self.app, text="PAREIGOS",font=("Bahnschrift", 15))
         self.i_pareigos = Entry(self.app)
         self.u_atlyginimas = Label(self.app, text="ATLYGINIMAS",font=("Bahnschrift", 15))
         self.i_atlyginimas = Entry(self.app)
-        self.prideti = Button(self.app, text="ATNAUJINTI", width=18, font=("Bahnschrift", 15))
+        self.prideti = Button(self.app, text="ATNAUJINTI", command=self.naujinti, width=18, font=("Bahnschrift", 15))
         self.pavadinimas.pack(side=TOP)
         self.pasirinkite.pack()
         self.sarasiukas.pack()
@@ -121,9 +128,16 @@ class Menu:
         self.prideti.pack()
         self.frame.pack()
 
-    #def naujinti(self):
-        #darbuotojas_naujas = database_sarasas()[self.sarasiukas.curselection()[0]]
-        #atnaujinti_duomenis(darbuotojas_naujas.id, self.i_vardas.get(),self.i_pavarde.get(), self.i_gimimo_data.get(),self.i_pareigos.get(),self.i_atlyginimas.get())
+    def naujinti(self):
+        darbuotojas_naujas = database_sarasas()[self.sarasiukas.curselection()[0]]
+        atnaujinti_duomenis(
+            darbuotojas_naujas.id,
+            n_vardas=self.i_vardas.get(),
+            n_pavarde = self.i_pavarde.get(),
+            n_gimimo_data= self.i_gimimo_data.get(),
+            n_pareigos= self.i_pareigos.get(),
+            n_atlyginimas= self.i_atlyginimas.get()
+        )
 
     def istrynimas(self):
         self.newWindow = tk.Toplevel(self.pagrindinis)
