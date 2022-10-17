@@ -54,7 +54,8 @@ class Menu:
         self.i_pareigos = Entry(self.app)
         self.u_atlyginimas = Label(self.app, text="ATLYGINIMAS",font=("Bahnschrift", 15))
         self.i_atlyginimas = Entry(self.app)
-        self.prideti = Button(self.app, text="PRIDETI", width=18, font=("Bahnschrift", 15))
+        self.i_vardas.bind("<Return>", self.naujas_darbuotojas)
+        self.prideti = Button(self.app, text="PRIDETI", command=self.naujas_darbuotojas, width=18, font=("Bahnschrift", 15))
         self.pavadinimas.pack(side=TOP)
         self.u_vardas.pack()
         self.i_vardas.pack()
@@ -68,6 +69,20 @@ class Menu:
         self.i_atlyginimas.pack()
         self.prideti.pack()
         self.frame.pack()
+
+    def naujas_darbuotojas(self):
+        prideti_prie_saraso(self.i_vardas, self.i_pavarde, self.i_gimimo_data, self.i_pareigos, self.i_atlyginimas)
+        self.atnaujinti()
+
+    def atnaujinti(self):
+        self.sarasiukas.delete(0,END)
+        self.sarasiukas.insert(END, *database_sarasas())
+        self.i_vardas(0, 'end')
+        self.i_pavarde(0, 'end')
+        self.i_gimimo_data(0, 'end')
+        self.i_pareigos(0, 'end')
+        self.i_atlyginimas(0, 'end')
+        self.i_vardas.focus()
         
 
     def atnaujinimas(self):
@@ -106,6 +121,9 @@ class Menu:
         self.prideti.pack()
         self.frame.pack()
 
+    #def naujinti(self):
+        #darbuotojas_naujas = database_sarasas()[self.sarasiukas.curselection()[0]]
+        #atnaujinti_duomenis(darbuotojas_naujas.id, self.i_vardas.get(),self.i_pavarde.get(), self.i_gimimo_data.get(),self.i_pareigos.get(),self.i_atlyginimas.get())
 
     def istrynimas(self):
         self.newWindow = tk.Toplevel(self.pagrindinis)
@@ -117,9 +135,7 @@ class Menu:
         self.pasirinkimas2 = Label(self.app, text="Kuri Norite Istrinti:", font=("Bahnschrift", 15))
         self.sarasiukas = Listbox(self.app, width=100, height=15 ,selectmode=SINGLE)
         self.sarasiukas.insert(END, *database_sarasas())
-        self.istrinti = Button(self.app, text="ISTRINTI", font=("Bahnschrift", 15))
-        #self.trinti = database_sarasas()[self.sarasiukas.curselection()[0]]
-        #self.komanda = istrinti_is_saraso(self.trinti.id)
+        self.istrinti = Button(self.app, text="ISTRINTI", command=self.trinti, font=("Bahnschrift", 15))
         self.pavadinimas.pack(side=TOP)
         self.pasirinkimas.pack(side=TOP)
         self.pasirinkimas2.pack(side=TOP)
@@ -127,9 +143,14 @@ class Menu:
         self.istrinti.pack(side=TOP)
         self.frame.pack()
 
+    def trinti(self):
+        self.trint = database_sarasas()[self.sarasiukas.curselection()[0]]
+        istrinti_is_saraso(self.trint.id)
+        self.atnaujinti()
 
     def isejimas(self):
         self.pagrindinis.destroy()
+
 
 def pagrindinis_langas():
     langas = tk.Tk()
